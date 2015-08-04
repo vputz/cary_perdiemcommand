@@ -18,7 +18,7 @@ Python.
 Requirements
 ------------
 
-Cary_perdiemcommand makes use of jinja2, tinydb, and fuzzywuzzy.
+Cary_perdiemcommand makes use of jinja2, tinydb, pyquery, and fuzzywuzzy with python-Levenshtein.
 
 Configuration
 -------------

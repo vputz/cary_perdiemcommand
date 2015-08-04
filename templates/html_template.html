@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+{% if not currency_check.is_current %}
+<p><b>WARNING!</b>  Listings may be out of date.<p>
+<p>Using conus file for <code>{{ currency_check.conus_last }}</code> (latest: <code>{{ currency_check.conus_latest }}</code>)</p>
+<p>Using oconus file for <code>{{ currency_check.oconus_last }}</code> (latest: <code>{{ currency_check.oconus_latest }}</code>)</p>
+{% endif %}
+
+<p>Here are the results of my per diem search for <b>{{ original_search_location }}</b></p>
+{% if original_search_location != actual_queried_location %}
+<p>I couldn't find any direct match, so I also tried <b>{{ actual_queried_location }})</b></p>
+{% endif %}
+
+{% if not found %}
+<h2>Not Found</h2>
+<p>Unfortunately, I still couldn't turn up any results; very sorry!  Try
+searching for <code>City, State</code> or <code>City, Country</code>.</p>
+{% else %}
+{% for match in closest_matches %}
+<h2>Location: {{ match.location }}</h2>
+<table>
+<tr>
+  <th>From</th>
+  <th>To</th>
+  <th>Lodging</th>
+  <th>Meals</th>
+  <th>Incidentals</th>
+</tr>
+{% for season in match.seasons %}
+<tr>
+  <th>{{ season.eff_date }}</th>
+  <th>{{ season.exp_date }}</th>
+  <th>{{ season.lodging }}</th>
+  <th>{{ season.meals }}</th>
+  <th>{{ season.incidentals }}</th>
+</tr>
+{% endfor %}
+</table>
+{% endfor %}
+{% endif %}
+
+<p>Conus file: <a href="{{ conus_url }}">{{ conus_url }}</a></p>
+<p>OConus file: <a href="{{ oconus_url }}">{{ oconus_url }}</a></p>
+</body>
+</html>

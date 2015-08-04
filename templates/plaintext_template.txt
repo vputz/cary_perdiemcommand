@@ -1,0 +1,24 @@
+{% if not currency_check.is_current %}
+Warning!  Listings may be out of date.
+    Using conus file for {{ currency_check.conus_last }} (latest: {{ currency_check.conus_latest }})
+    Using oconus file for {{ currency_check.oconus_last }} (latest: {{ currency_check.oconus_latest }})
+{% endif %}
+
+Here are the results of my per diem search for {{ original_search_location }}:
+{% if original_search_location != actual_queried_location %}
+(I couldn't find any direct match, so I also tried {{ actual_queried_location }})
+{% endif %}
+{% if not found %}
+Unfortunately, I still couldn't turn up any results; very sorry!  Try
+searching for 'City, State' or 'City, Country'.
+{% else %}
+{% for match in closest_matches %}
+Location: {{ match.location }}
+From\t\tTo\t\tLodging\t\tMeals\t\tIncidental
+{% for season in match.seasons %}
+{{ season.eff_date }}\t{{season.exp_date}}\t{{season.lodging}}\t\t{{season.meals}}\t\t{{season.incidentals}}{% endfor %}
+{% endfor %}
+{% endif %}
+
+Conus file: {{ conus_url }}
+Oconus file: {{ oconus_url }}

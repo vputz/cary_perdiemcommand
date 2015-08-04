@@ -24,14 +24,20 @@ Configuration
 -------------
 
 In your Cary `local_conf.py` file, please include configuration
-similar to the following:
+similar to the following (omitting `TEMPLATE_PATH` uses the default templates
+included in the module):
 
 ```
 PERDIEM_CONFIG=dict(
     LOCSTRING_FILENAME="/path/to/locstrings.csv",
     DB_FILENAME="/path/to/perdiem.json",
     TEMPLATE_PATH="/path/to/perdiem/templates"
-)
+	)
+	...
+from cary_perdiemcommand import PerDiemCommand
+COMMANDS.update({
+    "perdiem": (PerDiemCommand, PERDIEM_CONFIG),
+}
 
 ```
 

@@ -1,8 +1,8 @@
 from cary.carycommand import CaryCommand, CaryAction
-import datetime
 from cary_perdiemcommand.perdiem_database import PerdiemDatabase
+from cary_perdiemcommand import __path__ as MODULE_PATH
 from jinja2 import Environment, FileSystemLoader
-
+import os
 
 def formatted_reply(locstring_filename, db_filename, location, template):
 
@@ -43,9 +43,14 @@ class PerDiemAction(CaryAction):
     def search_line(self):
         return self._message.body.split("\n", 1)[0]
 
+    @property
+    def template_path(self):
+        return self.config['TEMPLATE_PATH'] if 'TEMPLATE_PATH' in self.config\
+          else os.path.join(MODULE_PATH[0], "templates")
+
     def execute_action(self):
         self.environment = Environment(loader=FileSystemLoader(
-            self.config['TEMPLATE_PATH']
+            self.template_path
             ))
         self._output_filenames = []
         self._perdiem_text_plain = formatted_reply(

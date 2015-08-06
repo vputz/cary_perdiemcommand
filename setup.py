@@ -12,7 +12,7 @@ data files from the US government websites.
 
 setup(
     name='cary_perdiemcommand',
-    version='1.0.0',
+    version='1.0.1',
     description='US gov per-diem lookup for Cary',
     long_description=long_description,
     url='https://github.com/vputz/cary_perdiemcommand',
@@ -42,7 +42,7 @@ setup(
     extras_require={},
 
     package_data={
-        'cary_perdiemcommand': ['templates']
+        'cary_perdiemcommand': ['templates/*']
         },
 
     data_files=[],

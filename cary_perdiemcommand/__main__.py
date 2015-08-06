@@ -55,7 +55,7 @@ def query(locstrings, database, location):
                      indent=4, separators=(',', ': ')))
 
 
-if __name__ == "__main__":
+def main():
     parser = make_parser()
     args = parser.parse_args()
     try:
@@ -74,3 +74,7 @@ if __name__ == "__main__":
                 print("\nERROR: Query must have a --location\n")
             else:
                 query(locstrings, database, args.location)
+
+
+if __name__ == "__main__":
+    main()

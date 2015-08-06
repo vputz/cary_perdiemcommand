@@ -52,3 +52,16 @@ Command
 
 The first line of the email body should be a "city, country" or "city, state, country" such
 as "Brugges, Belgium" or "Baltimore, MD, USA" (US cities should include state *and* country).
+
+
+Command-line tool
+-----------------
+
+You can execute the module from the shell command line in order to rebuild the database or
+do a manual query.  Use `python -m cary_perdiemcommand`; you will have to either pass
+locations for the files manually or use an existing settings file.  For example, to rebuild
+the database using a local.conf file for the file locations, use
+
+```
+python -m cary_perdiemcommand --settings=/path/to/local_conf.py rebuild
+```

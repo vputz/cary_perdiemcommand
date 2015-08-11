@@ -4,7 +4,7 @@ from cary_perdiemcommand.perdiem_scraper import oconus_files, perdiem_dateformat
 import datetime
 import csv
 from fuzzywuzzy import process
-
+import logging
 
 class PerdiemDatabase():
 
@@ -85,8 +85,14 @@ class PerdiemDatabase():
                                              threshold, max_results)
         return (query, result)
 
-    def perdiem_query(self, original_location):
-        queried_location, ls = self.locstrings_with_punt(original_location)
+    def perdiem_query(self, original_location, threshold=90):
+        logging.debug(
+            "attempted perdiem query of {0} with threshold {1}".format(
+                original_location,
+                threshold
+            ))
+        queried_location, ls = self.locstrings_with_punt(
+            original_location, threshold=threshold)
         found = (len(ls) > 0)
         closest_matches = [dict(score=l[1],
                                 location=l[0],

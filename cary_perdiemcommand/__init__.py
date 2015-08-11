@@ -4,10 +4,11 @@ from cary_perdiemcommand import __path__ as MODULE_PATH
 from jinja2 import Environment, FileSystemLoader
 import os
 
-def formatted_reply(locstring_filename, db_filename, location, template):
+
+def formatted_reply(locstring_filename, db_filename, location, template, threshold=90):
 
     pd = PerdiemDatabase(locstring_filename, db_filename)
-    pd_query = pd.perdiem_query(location)
+    pd_query = pd.perdiem_query(location, threshold=threshold)
     return template.render(pd_query)
 
 
@@ -57,7 +58,9 @@ class PerDiemAction(CaryAction):
             self.config['LOCSTRING_FILENAME'],
             self.config['DB_FILENAME'],
             self.search_line(),
-            self.environment.get_template('plaintext_template.txt')
+            self.environment.get_template('plaintext_template.txt'),
+            threshold=self.config['PERDIEM_THRESHOLD']
+            if 'PERDIEM_THRESHOLD' in self.config else 90
         )
         self._perdiem_text_html = formatted_reply(
             self.config['LOCSTRING_FILENAME'],

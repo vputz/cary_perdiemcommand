@@ -37,7 +37,9 @@ setup(
                       'jinja2',
                       'tinydb',
                       'pyquery',
-                      'fuzzywuzzy'],
+                      'fuzzywuzzy',
+                      'python-Levenshtein'
+                  ],
 
     extras_require={},
 

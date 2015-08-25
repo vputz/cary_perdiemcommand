@@ -10,6 +10,7 @@ import csv
 from tinydb import TinyDB
 import itertools
 import os
+import logging
 
 perdiem_url = "http://www.defensetravel.dod.mil/site/perdiemFiles.cfm"
 perdiem_dateformat = "%d %B %Y"
@@ -35,7 +36,11 @@ def conus_files(q, base_url):
         item = conus_locations_list.eq(i)
 
         date = item('b:contains("Effective")').text()
-        date_text = re.search(r"(\d+\s\w+\s\d+)", date).group(0)
+        try:
+            date_text = re.search(r"(\d+\s+\w+\s+\d+)", date).group(0)
+        except:
+            logging.exception("Serious error parsing date")
+            logging.debug("Date text: {0}".format(date))
 
         file_url = item('a:contains("Relational")').attr("href")
         result.append((date_text, urljoin(base_url, file_url)))
@@ -51,7 +56,7 @@ def oconus_files(q, base_url):
         item = oconus_locations_list.eq(i)
 
         date = item('b:contains("Effective")').text()
-        date_text = re.search(r"(\d+\s\w+\s\d+)", date).group(0)
+        date_text = re.search(r"(\d+\s+\w+\s+\d+)", date).group(0)
 
         file_url = item('a:contains("Relational")').attr("href")
         result.append((date_text, urljoin(base_url, file_url)))
